@@ -163,9 +163,3 @@ flowchart TB
 - There's no login route or session/JWT issuance yet — anyone can hit any `/users` route.
 - No delete endpoint yet.
 - No frontend yet — Stages 03 and 04 will add a UI on top of the authenticated API.
-
-## About
-
-[#about](#about)
-
-A hands-on learning repo tracing one auth system through every stage — raw Node.js → Express with JWT/sessions → vanilla JS frontend → React + Vite. Covers hashing, protected routes, refresh tokens, RBAC & CSRF, growing in complexity at each step. On the way.
