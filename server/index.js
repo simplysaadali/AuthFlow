@@ -66,4 +66,28 @@ code.post("/users", async (req, res) => {
     }
 });
 
+code.put("/users/:id", async (req, res) => {
+    try {
+        const user = await User.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            { new: true }
+        );
+
+        if(!user){
+            return res.status(404).json({
+                success: false,
+                message: "User not found"
+            });
+        }
+        res.status(200).json(user)
+    } catch (error) {
+        console.error("Error updating user: ", error)
+        res.status(500).json({
+            success: false,
+            message: "Error updating user",
+        });
+    }
+});
+
 code.listen(PORT, () => console.log("API running on port " + PORT));

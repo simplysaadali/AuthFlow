@@ -3,11 +3,14 @@
 
 import mongoose from "mongoose";
 
-// const url = process.env.DB_URL;
+// const url = process.env.DB_URL; 
+    // writing this here gives error, so we've to use direclty, not by variable, but if we write inside, tj varibale cn be used
+
 
 async function connectDB (){
+    const url = process.env.DB_URL;
     try {
-        await mongoose.connect(process.env.DB_URL);
+        await mongoose.connect(url);
         console.log("Connected to the DB successfully");
     } catch (error) {
         console.error("Error connecting to the Data Base: ", error);
