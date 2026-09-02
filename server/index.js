@@ -31,15 +31,17 @@ code.get("/users", async (req, res) => {
 code.get("/users/:id", async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
-        res.status(200),sjon({
+        if(!user){
+                return res.status(404).json({
+                message: "User not found",
+                success: false,
+            })
+        }
+
+        res.status(200),json({
             success: true,
             data: user,
         });
-
-        if(!user) return res.status(404).json({
-            message: "User not found",
-            success: false,
-        })
     } catch (error) {
         console.error("Error fetching user: ", error);
         res.status(400).json({
@@ -94,7 +96,7 @@ code.delete("/users/:id", async (req, res) => {
     try {
         const user = await User.findByIdAndDelete(req.params.id);
         if(!user){
-            res.status(404).json({
+            return res.status(404).json({
                 success: false,
                 message: "User not found",
             });
@@ -109,6 +111,82 @@ code.delete("/users/:id", async (req, res) => {
         res.status(400).json({
             success: false,
             message: "Error deleting user",
+        });
+    }
+});
+
+// Auth api and code
+
+code.post("/register", async (req, res) => {
+    try {
+        const { name, email, password } = req.body;
+
+        const findUser = await User.findOne({ email });
+        if(findUser){
+            return res.json({
+                message: "Email already registered!"
+            })
+        }
+
+        const user = await User.create({ name, email, password })
+        res.status(201).json({
+            success: true,
+            message: "User registered successfully!",
+            data: user,
+        });
+    } catch (error) {
+        console.error("Server Error: ", error)
+        res.status(500).json({
+            success: false,
+            message: "Server Error",
+        });
+    }
+});
+
+code.post("/login", async (req, res) => {
+    try {
+        const { email, password } =  req.body;
+        const user = await User.findOne({ email });
+
+        if(!user){
+            return res.status(404).json({
+                message: "User not found",
+                success: false,
+            });
+        }
+         if(user.password !== password){
+            return res.status(400).json({
+                message: "Invalid Passsword!",
+                success: false,
+            })
+        }
+
+            res.status(200).json({
+            success: true,
+            message: "Login Successfull!",
+            data: user,
+        });
+
+       
+    } catch (error) {
+        console.error("Server Error: ", error);
+        res.status(500).json({
+            success: false,
+            message: "Server Error",
+        });
+    }
+});
+
+code.post("/logout", async (req, res) => {
+    try {
+        res.status(200).json({
+            success: true,
+            message: "Logout Done!",
+        });
+    } catch (error) {
+        res.status(400).json({
+            message: "Error logging out!",
+            success: false,
         });
     }
 });
