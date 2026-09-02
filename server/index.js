@@ -38,7 +38,7 @@ code.get("/users/:id", async (req, res) => {
             })
         }
 
-        res.status(200),json({
+        res.status(200).json({
             success: true,
             data: user,
         });
@@ -121,7 +121,15 @@ code.post("/register", async (req, res) => {
     try {
         const { name, email, password } = req.body;
 
+        if(!email || !name || !password ){
+            return res.status(400).json({
+                success: false,
+                message: "All fields required!",
+            });
+        }
+
         const findUser = await User.findOne({ email });
+
         if(findUser){
             return res.json({
                 message: "Email already registered!"
@@ -129,11 +137,13 @@ code.post("/register", async (req, res) => {
         }
 
         const user = await User.create({ name, email, password })
+
         res.status(201).json({
             success: true,
             message: "User registered successfully!",
             data: user,
         });
+        
     } catch (error) {
         console.error("Server Error: ", error)
         res.status(500).json({
@@ -154,6 +164,13 @@ code.post("/login", async (req, res) => {
                 success: false,
             });
         }
+
+        const userData = {
+            id: user._id,
+            name: user.name,
+            email: user.email
+        }
+
          if(user.password !== password){
             return res.status(400).json({
                 message: "Invalid Passsword!",
@@ -161,10 +178,17 @@ code.post("/login", async (req, res) => {
             })
         }
 
+        if(!email || !password){
+            res.status(400).json({
+                success: false,
+                message: "Email and Password both required!",
+            });
+        }
+
             res.status(200).json({
             success: true,
             message: "Login Successfull!",
-            data: user,
+            data: userData,
         });
 
        
