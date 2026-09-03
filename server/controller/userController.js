@@ -39,22 +39,24 @@ export const getUser = async (req, res) => {
     }
 }
 
-export const createUser = async (req, res) => {
-    try {
-        const user = await User.create(req.body);
-        res.status(201).json({
-            success: true,
-            // message: "User Created Successfully",
-            data: user,
-        });
-    } catch (error) {
-        console.error("Error creating user: ", error);
-        res.status(400).json({
-            success: false,
-            message: "Error creating user",
-        });
-    }
-}
+//when there is register, why to post user
+
+// export const createUser = async (req, res) => {
+//     try {
+//         const user = await User.create(req.body);
+//         res.status(201).json({
+//             success: true,
+//             // message: "User Created Successfully",
+//             data: user,
+//         });
+//     } catch (error) {
+//         console.error("Error creating user: ", error);
+//         res.status(400).json({
+//             success: false,
+//             message: "Error creating user",
+//         });
+//     }
+// }
 
 export const updateUser = async (req, res) => {
     try {
