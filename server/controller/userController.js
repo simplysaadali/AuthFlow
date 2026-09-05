@@ -18,7 +18,9 @@ export const getUsers = async (req, res) => {
 
 export const getUser = async (req, res) => {
     try {
-        const user = await User.findById(req.params.id);
+        // req.params.id actually equals _id: req.params.id
+        // .select() return only name and email in the response
+        const user = await User.findById(req.params.id).select("name email");
         if(!user){
                 return res.status(404).json({
                 message: "User not found",
@@ -30,6 +32,7 @@ export const getUser = async (req, res) => {
             success: true,
             data: user,
         });
+
     } catch (error) {
         console.error("Error fetching user: ", error);
         res.status(400).json({
