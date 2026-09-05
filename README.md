@@ -1,8 +1,10 @@
-[![AuthFlow Banner](https://capsule-render.vercel.app/api?type=waving&color=0:8A9B68,100:2B2620&height=180&section=header&text=AuthFlow&fontSize=60&fontColor=ffffff&animation=fadeIn&fontAlignY=38)](#)
+[![AuthFlow Banner](https://capsule-render.vercel.app/api?type=waving&color=0:667EEA,50:764BA2,100:F093FB&height=180&section=header&text=AuthFlow&fontSize=60&fontColor=ffffff&animation=fadeIn&fontAlignY=38)](#)
 
-**Stack Used (Stage 1):**
+**Stack Used:**
 
-[![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/) [![Express](https://img.shields.io/badge/Express-5-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/) [![MongoDB](https://img.shields.io/badge/MongoDB-Mongoose-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://mongoosejs.com/) [![JWT](https://img.shields.io/badge/JWT-planned-lightgrey?style=for-the-badge&logo=jsonwebtokens&logoColor=white)](#the-learning-path) [![React](https://img.shields.io/badge/React-planned-lightgrey?style=for-the-badge&logo=react&logoColor=white)](#the-learning-path)
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=nodejs,express,mongodb,react" height="50"/>
+</p>
 
 ## One Auth System, Rebuilt At Every Stage
 
@@ -163,3 +165,5 @@ flowchart TB
 - There's no login route or session/JWT issuance yet — anyone can hit any `/users` route.
 - No delete endpoint yet.
 - No frontend yet — Stages 03 and 04 will add a UI on top of the authenticated API.
+
+[![AuthFlow Footer](https://capsule-render.vercel.app/api?type=waving&color=0:667EEA,50:764BA2,100:F093FB&height=120&section=footer&animation=fadeIn)](#)
