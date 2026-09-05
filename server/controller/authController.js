@@ -1,5 +1,44 @@
 // import bcrypt from "bcryptjs";
 import User from "../models/User.js";
+import jwt from "jsonwebtoken"
+import { bcrypt } from 'bcryptjs';
+
+export const cookieOption =() => ({
+    httpOnly : true, //This means JavaScript running in the browser cannot directly read the cookie.
+    secure : process.env.NODE_ENV === "production",
+
+    // this equals to
+        // let secure;
+        // if (process.env.NODE_ENV === "production") {
+        //     secure = true; only send when https (for production)
+        // } else {
+        //     secure = false; no send if http (for development)
+        // }
+
+    sameSite: lax,
+    // "Don't send my authentication cookie freely in cross-site requests, but allow it in some normal navigation situations."
+
+    maxAge: 7 * 24 * 6 * 60 * 1000,
+});
+
+//this function creates jwt
+export const signToken = () => jwt.sign (
+    {
+        id: user._id,
+        // role: user.role
+    },
+    process.env.JWT_SECRET,
+    {
+        expiresIn: "7d",
+    }
+);
+
+export const publicUser = (u) => ({
+    _id: u._id,
+    name: u.name,
+    email: u.email,
+    // role: u.role
+});
 
 export const register = async (req, res) => {
     try {
@@ -20,16 +59,15 @@ export const register = async (req, res) => {
             })
         }
 
-        const user = await User.create({ name, email, password })
+        const hash = await bcrypt.hash(password, 10);
+        const user = await User.create({ name, email, password });
 
-        res.status(201).json({
-            success: true,
-            message: "User registered successfully!",
-            data: user,
+        res.cookie("token", signToken(user), cookieOption())
+        .status(201).json({
+            user: publicUser(user)
         });
         
     } catch (error) {
-        console.error("Server Error: ", error)
         res.status(500).json({
             success: false,
             message: "Server Error",
@@ -39,43 +77,24 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
     try {
-        const { email, password } =  req.body;
-        const user = await User.findOne({ email });
+        const { password } =  req.body;
+        const { email } = String(req.body.email ?? "").trim().toLowerCase();
+        const user = await User.findOne({ email }).select("+password");
 
-        if(!user){
-            return res.status(404).json({
-                message: "User not found",
-                success: false,
-            });
-        }
+        const ok = user && (await bcrypt.compare(password, user.password));
+        // user && used as if there is no email, user is null, gives error
 
-        const userData = {
-            id: user._id,
-            name: user.name,
-            email: user.email
-        }
-
-         if(user.password !== password){
+        if(!ok){
             return res.status(400).json({
-                message: "Invalid Passsword!",
-                success: false,
-            })
-        }
-
-        if(!email || !password){
-            res.status(400).json({
-                success: false,
-                message: "Email and Password both required!",
+                message: "Invalid Credentials"
             });
         }
 
-            res.status(200).json({
-            success: true,
-            message: "Login Successfull!",
-            data: userData,
+        res.cookie("token", signToken(user), cookieOption())
+        .status(200).json({
+            user: publicUser(user),
         });
 
-       
     } catch (error) {
         console.error("Server Error: ", error);
         res.status(500).json({
@@ -83,18 +102,18 @@ export const login = async (req, res) => {
             message: "Server Error",
         });
     }
-}
+};
 
 export const logout = async (req, res) => {
     try {
-        res.status(200).json({
-            success: true,
-            message: "Logout Done!",
+        res.clearCookie("token", cookieOption());
+        rs.json({
+            message: "User Logged Out",
         });
     } catch (error) {
-        res.status(400).json({
-            message: "Error logging out!",
+        res.status(500).json({
+            message: "Server Error!",
             success: false,
         });
     }
-}
+};
