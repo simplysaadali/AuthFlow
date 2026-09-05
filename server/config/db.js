@@ -1,7 +1,8 @@
-// import dotenv from "dotenv";
+import dotenv from "dotenv";
 // dotenv.config();
 
 import mongoose from "mongoose";
+dotenv.config();
 
 // const url = process.env.DB_URL; 
     // writing this here gives error, so we've to use direclty, not by variable, but if we write inside, tj varibale cn be used
