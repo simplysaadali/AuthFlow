@@ -65,10 +65,9 @@ export const verifyEmail = async (req, res) => {
         await user.save();
 
         // Create JWT after email verification
-        const token = signToken(user);
 
         // Set authentication cookie
-        res.cookie("token", token, cookieOption());
+        res.cookie("token", signToken(user), cookieOption());
 
         return res.status(200).json({
             success: true,
