@@ -22,7 +22,18 @@ const userSchema = new mongoose.Schema({
             // Don't return the password field when querying users by default. password is hidden but this query helps to show
     },
 
+    isEmailVerified: {
+        type: Boolean,
+        default: false,
+    },
 
+    emailOTP: {
+        type: String,
+    },
+
+    emailOTPExpires: {
+        type: Date,
+    },
 });
 
 export default mongoose.model("User", userSchema);
