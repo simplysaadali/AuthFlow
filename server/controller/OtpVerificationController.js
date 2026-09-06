@@ -1,5 +1,5 @@
 import User from "../models/User.js";
-import { signToken, cookieOption, publicUser } from "../utils/auth.js";
+import { signToken, cookieOption, publicUser } from "../utils/helper.js";
 
 export const verifyEmail = async (req, res) => {
     try {
