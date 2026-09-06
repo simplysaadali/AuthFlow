@@ -24,9 +24,9 @@ code.use("/users", userRoutes)
 code.use("/auth", authRoutes)
 
 mongoose
-  .connect(process.env.DB_URI)
+  .connect(process.env.DB_URL)
   .then(() => {
     console.log("MongoDB connected");
-    server.listen(PORT, () => console.log("Server running on port " + PORT));
+    code.listen(PORT, () => console.log("Server running on port " + PORT));
   })
   .catch((err) => console.log("MongoDB error:", err.message));
