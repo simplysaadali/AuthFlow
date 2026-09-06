@@ -1,3 +1,11 @@
+<p align="center">
+	<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0f172a,50:0f766e,100:f59e0b&height=190&section=header&text=AuthFlow&fontSize=60&fontColor=ffffff&animation=fadeIn&fontAlignY=38" alt="AuthFlow banner" />
+</p>
+
+<p align="center">
+	<img src="https://skillicons.dev/icons?i=nodejs,express,mongodb,js&theme=light" height="52" alt="Node.js, Express, MongoDB, and JavaScript" />
+</p>
+
 # AuthFlow
 
 ### Make the request. Verify the human. Keep the session.
