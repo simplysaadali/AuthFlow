@@ -12,14 +12,14 @@ export const cookieOption =() => ({
         //     secure = false; no send if http (for development)
         // }
 
-    sameSite: lax,
+    sameSite: "lax",
     // "Don't send my authentication cookie freely in cross-site requests, but allow it in some normal navigation situations."
 
     maxAge: 7 * 24 * 6 * 60 * 1000,
 });
 
 //this function creates jwt
-export const signToken = () => jwt.sign (
+export const signToken = (user) => jwt.sign (
     {
         id: user._id,
         // role: user.role
