@@ -1,75 +1,81 @@
-<p align="center">
-	<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0f172a,50:0f766e,100:f59e0b&height=190&section=header&text=AuthFlow&fontSize=60&fontColor=ffffff&animation=fadeIn&fontAlignY=38" alt="AuthFlow banner" />
-</p>
-
-<p align="center">
-	<img src="https://skillicons.dev/icons?i=nodejs,express,mongodb,js&theme=light" height="52" alt="Node.js, Express, MongoDB, and JavaScript" />
-</p>
-
 # AuthFlow
 
-### Make the request. Verify the human. Keep the session.
+A lightweight Node.js + Express authentication backend for user signup, email OTP verification, login, JWT cookie auth, and basic user management.
 
-AuthFlow is a small Express + MongoDB authentication playground. It is being built in public, one useful layer at a time: registration, email OTP verification, password hashing, JWT cookies, and user management.
+## Features
 
-> **Status:** backend in progress. Expect sharp edges while the auth flow is being tightened.
+- User registration with password hashing
+- Email OTP verification flow
+- Secure login with JWT cookie
+- Logout support
+- MongoDB user model and CRUD API
+- Email sending for OTP delivery
 
-## Stack
+## Tech Stack
 
-`Node.js` · `Express 5` · `MongoDB` · `Mongoose` · `bcryptjs` · `jsonwebtoken` · `Nodemailer`
+- Node.js
+- Express
+- MongoDB + Mongoose
+- JWT
+- bcryptjs
+- Nodemailer
 
-## Start here
-
-Requirements: Node.js 18+, npm, MongoDB, and an email account for OTP delivery.
+## Setup
 
 ```bash
 cd server
 npm install
-cp .env.example .env
-npm run dev
 ```
 
-Fill in `.env` before starting the server:
+Create a `.env` file in the `server` folder:
 
 ```env
 PORT=3000
 DB_URL=mongodb://127.0.0.1:27017/authflow
-JWT_SECRET=replace-me
+JWT_SECRET=your_secret_key
 EMAIL_USER=you@example.com
-EMAIL_PASS=your-app-password
+EMAIL_PASS=your_app_password
 ```
 
-Keep `.env` private. The API listens on `http://localhost:3000`.
+Run the app:
 
-## Routes
+```bash
+npm run dev
+```
 
-| Method | Endpoint | Purpose |
-| --- | --- | --- |
-| `POST` | `/auth/register` | Create a user and send an OTP |
-| `POST` | `/auth/verify-email` | Confirm the email with the OTP |
-| `POST` | `/auth/login` | Sign in and issue a JWT cookie |
-| `POST` | `/auth/logout` | Clear the session cookie |
-| `GET` | `/users` | List users |
-| `GET` | `/users/:id` | Read one user |
-| `PUT` | `/users/:id` | Update a user |
-| `DELETE` | `/users/:id` | Delete a user |
+The server runs at `http://localhost:3000`.
 
-Send JSON bodies to the auth routes. Registration expects `name`, `email`, and `password`; verification expects `email` and `otp`.
+## API Routes
 
-## Shape of the project
+### Auth
+
+- `POST /auth/register` — register user and send OTP
+- `POST /auth/verify-email` — verify email with OTP
+- `POST /auth/login` — log in and set JWT cookie
+- `POST /auth/logout` — clear auth cookie
+
+### Users
+
+- `GET /users` — get all users
+- `GET /users/:id` — get one user
+- `PUT /users/:id` — update user
+- `DELETE /users/:id` — delete user
+
+## Project Structure
 
 ```text
 server/
-├── config/       MongoDB connection
-├── controller/   Auth, OTP, and user logic
-├── middleware/   JWT authentication middleware
-├── models/       Mongoose schemas
-├── routes/       /auth and /users endpoints
-└── utils/        Cookies, tokens, and email delivery
+├── config/
+├── controller/
+├── middleware/
+├── models/
+├── routes/
+├── utils/
+├── index.js
+├── package.json
+└── .env
 ```
 
-## Next up
+## Notes
 
-- Protect user routes with auth middleware
-- Add validation, rate limiting, and refresh-token handling
-- Add tests and a small frontend
+This project is a backend auth starter and is still evolving. The core flow is in place, and the next improvements would usually include validation, route protection, and tests.
