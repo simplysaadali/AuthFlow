@@ -18,7 +18,8 @@ export const register = async (req, res) => {
         const findUser = await User.findOne({ email });
 
         if(findUser){
-            return res.json({
+            return res.status(409).json({
+                success: false,
                 message: "Email already registered!"
             })
         }
