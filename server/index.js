@@ -6,6 +6,7 @@ import express from "express";
 import connectDB from "./config/db.js"
 // import User from "./models/User.js";
 import cookieParser from "cookie-parser"; //with this, you can get cookie easily in backend, used as a middleware
+import cors from "cors";
 import mongoose from "mongoose";
 
 import userRoutes from "./routes/userRoutes.js";
@@ -14,6 +15,10 @@ import authRoutes from "./routes/authRoutes.js"
 const PORT = process.env.PORT;
 
 const code = express();
+code.use(cors({
+  origin: process.env.CLIENT_URL || "http://localhost:5173",
+  credentials: true,
+}));
 code.use(express.json());
 code.use(cookieParser());
 
