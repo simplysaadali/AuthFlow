@@ -1,49 +1,48 @@
 # AuthFlow
 
-A lightweight Node.js + Express authentication backend for user signup, email OTP verification, login, JWT cookie auth, and basic user management.
+A lightweight Node.js + Express authentication app with a React login UI, email OTP verification, JWT cookie auth, and basic user management.
 
 ## Features
 
 - User registration with password hashing
 - Email OTP verification flow
-- Secure login with JWT cookie
-- Logout support
+- Login and logout with an HTTP-only JWT cookie
 - MongoDB user model and CRUD API
 - Email sending for OTP delivery
+- Responsive React authentication UI
 
 ## Tech Stack
 
-- Node.js
-- Express
-- MongoDB + Mongoose
-- JWT
-- bcryptjs
-- Nodemailer
+- Node.js, Express, MongoDB, Mongoose
+- JWT, bcryptjs, Nodemailer
+- React + Vite
 
 ## Setup
+
+Install dependencies for both apps:
 
 ```bash
 cd server
 npm install
+cd ../client
+npm install
 ```
 
-Create a `.env` file in the `server` folder:
+Copy `server/.env.example` to `server/.env` and set your database, JWT, and email credentials. Copy `client/.env.example` to `client/.env` if your API is not running at `http://localhost:3000`.
 
-```env
-PORT=3000
-DB_URL=mongodb://127.0.0.1:27017/authflow
-JWT_SECRET=your_secret_key
-EMAIL_USER=you@example.com
-EMAIL_PASS=your_app_password
-```
-
-Run the app:
+Run each app in its own terminal:
 
 ```bash
+cd server
 npm run dev
 ```
 
-The server runs at `http://localhost:3000`.
+```bash
+cd client
+npm run dev
+```
+
+The API runs at `http://localhost:3000` and the UI at `http://localhost:5173`. Set the backend's `CLIENT_URL` to the UI origin so browser requests can include the authentication cookie.
 
 ## API Routes
 
@@ -64,6 +63,14 @@ The server runs at `http://localhost:3000`.
 ## Project Structure
 
 ```text
+client/
+├── src/
+│   ├── App.jsx
+│   ├── main.jsx
+│   └── styles.css
+├── .env.example
+├── index.html
+└── vite.config.js
 server/
 ├── config/
 ├── controller/
@@ -73,9 +80,5 @@ server/
 ├── utils/
 ├── index.js
 ├── package.json
-└── .env
+└── .env.example
 ```
-
-## Notes
-
-This project is a backend auth starter and is still evolving. The core flow is in place, and the next improvements would usually include validation, route protection, and tests.
